@@ -1,0 +1,33 @@
+class Solution {
+    public int countCharacters(String[] words, String chars) {
+        int res = 0;
+        for(String word:words){
+            if(compare(word, chars)){
+                res += word.length();
+            }
+        }
+        return res;
+}
+    boolean compare(String str, String chars){
+                int[] countStr = count(str);
+                int[] countChars = count(chars);
+                for(int i=0; i<26; i++){
+                    if(countStr[i] <= countChars[i]){
+                        continue;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                return true;
+    }
+        
+    int[] count(String str){
+            int[] counter = new int[26];
+            for(int i=0; i < str.length(); i++){
+                char c = str.charAt(i);
+                counter[c-'a']++;
+                }
+            return counter;
+    }
+}
