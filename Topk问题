@@ -1,0 +1,40 @@
+1、快速排序最高效解决TopKW问题
+class Solution{
+	public int[] getLeastNumbers(int[] arr, int k){
+		if(k==0 || arr.length == 0){
+			return new int[0];
+		}	
+		//最后一个参数表示要找的下标为k-1的数字
+		return quickSearch(arr,0,arr.length-1,k-1);
+	}
+	private int[] quickSearch(int[] nums, int low, int high, int k){
+		//每快排一次 找到排序后下标为j的元素，如果j恰好等于k就返回j以及j左边的所有的数字
+		int j = partition(nums, low, high);
+		if(j==k){
+			return Arrays.copyOf(nums, j+1);
+		}
+		//否则根据下标j与k的大小来决定继续切分左端还是右端
+		return j > k ? quickSearch(nums, low, j-1,  k): quickSearch(nums, j+1, high,  k);
+	}
+	private int partition(int[] nums, int low, int high){
+		int base = nums[low];
+		int i = low;
+		int j = high;
+		while(i < j){
+			while(i < j && nums[j] > base){
+				j--;
+			}
+			while(i < j && nums[i] <= base){
+				i++;
+			}
+			tmp = nums[i];
+			nums[i] = nums[j];
+			nums[j] = nums[i];
+		}
+		nums[low] = nums[i];
+		nums[i] = base;
+		return j;
+	}
+	
+}
+
