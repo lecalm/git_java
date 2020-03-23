@@ -1,0 +1,13 @@
+//官方提供的第三种快慢指针法很值得借鉴
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+};
