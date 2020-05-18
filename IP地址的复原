@@ -1,0 +1,37 @@
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ip = new ArrayList<>();
+        if(s == null || s.length()<3){
+            return ip;
+        }
+        helper(0,ip,s,4,"",s.length());
+
+        return ip;        
+    }
+
+    public void helper(int pos, List<String> ip, String s, int flag, String tmp,int n){
+        //pos表示每次开始遍历的起点，flag表示还剩几段没有复原（ip地址合法一共有4段）
+        //表示字符串走到头了
+        if(pos == n && flag == 0){
+            ip.add(tmp.substring(0,tmp.length()-1));
+            return;
+        }
+        if(flag < 0){
+            return;
+        }
+        //ip地址每段最多只能有3个数字
+        for(int i=pos;i<pos+3;i++){
+            if(i<n){
+                //假设每段的首字符为0，则该段便无需在循环，直接break即可
+                if(i==pos && s.charAt(i)=='0'){
+                    helper(i+1,ip,s,flag-1,tmp+'0'+'.',n);
+                    break;
+                }
+                //画出树图 可知每段按一个数字，2个数字，3个数字往下延申
+                if(Integer.parseInt(s.substring(pos, i+1))<=255){
+                    helper(i+1,ip,s,flag-1,tmp+s.substring(pos,i+1)+'.',n);
+                }
+            }
+        }
+    }
+}
