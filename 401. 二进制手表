@@ -1,0 +1,68 @@
+class Solution 
+{
+    
+    List<String> res = new ArrayList<String>();
+    int[] watch = {1, 2, 4, 8, 1, 2, 4, 8, 16, 32};
+    int[] onOff = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    
+    public List<String> readBinaryWatch(int num) 
+    {
+        if(num > 8) return res;
+        dfs(num, 0, 0);
+        return res;
+    }
+    
+    public void dfs(int num, int onSum ,int start)
+    {
+        if(onSum == num)
+        {
+            addResult();
+            return;
+        }
+        
+        for(int i = start; i < watch.length; i++)
+        {
+            onOff[i] = 1;
+            dfs(num, onSum + 1, i + 1);
+            onOff[i] = 0;
+        }
+    }
+    
+    public void addResult()
+    {
+        int hour = 0;
+        int minute = 0;
+        for(int i = 0; i < onOff.length; i++)
+        {
+            if(onOff[i] == 1)
+            {
+                if(i < 4)
+                {
+                    hour += watch[i];    
+                }   
+                else
+                {
+                    minute += watch[i];
+                }
+            }
+        }
+        if(hour > 11 || minute > 59) return;
+        String time = hour + ":" + ((minute < 10) ? "0"+minute : minute); 
+        res.add(time);    
+    }
+}
+#####解法二:利用java bitCount类
+class Solution{
+	public List<String>readBinaryWatch(int num){
+		List<String>times=new ArrayList<>();
+		for(int h=0;h<12;h++){
+			for(int m=0;m<60;m++){
+				if(Integer.bitCount(h)+Integer.bitCount(m)==num)
+					times.add(String.format("%d:%02d",h,m));
+			}
+		}
+		return times;
+	}
+}
+
+
