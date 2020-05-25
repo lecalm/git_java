@@ -1,0 +1,33 @@
+//使用经典回溯算法，由于后面选择数字时要从头开始选，因此用一个used[]数组标记，
+//最开始传参时，我将count当作形参传入，忽略的java的值传递规则，导致最后输出时输出为0
+class Solution {
+    public int count = 0;
+    public int countArrangement(int N) {
+        boolean[] used = new boolean[N+1];
+        helper(used,0,N);
+        return count;
+    }
+    public void helper(boolean[] used,int length,int N){
+        if( length==N){
+            count+=1;
+            return;
+        }
+        for(int i=1;i<=N;i++){
+            if(!used[i]){
+                if(!isValid(i,length+1)){
+                    continue;
+                }
+                used[i] = true;
+                helper(used,length+1,N);
+                used[i] = false;
+
+            }
+        }
+    }
+    public boolean isValid(int n,int index){
+        if(n % index==0 || index % n ==0){
+            return true;
+        }
+        return false;
+    }
+}
