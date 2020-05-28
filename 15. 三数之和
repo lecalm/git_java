@@ -1,0 +1,38 @@
+##数组先排序 再利用双指针
+*最要注意的点是当 k > 0且nums[k] == nums[k - 1]时即跳过此元素nums[k]：因为已经将 nums[k - 1] 的所有组合加入到结果中，本次双指针搜索只会得到重复组合。
+
+'''
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int k=0; k<nums.length-2;k++){
+            if(nums[k]>0){
+                break;
+            }
+            if(k>0 && nums[k-1] == nums[k]){
+                continue;
+            }
+            int i=k+1;
+            int j=nums.length-1;
+            while(i<j){
+                int sum = nums[k] + nums[i] + nums[j];
+                if(sum<0){
+                    while(i<j && nums[i] == nums[++i]);
+                }
+                else if(sum>0){
+                    while(i<j && nums[j] == nums[--j]);
+                }
+                else{
+                //此处的while循环是亮点，既判断了相等的情况也使得i和j发生改变
+                    res.add(new ArrayList<Integer>(Arrays.asList(nums[k], nums[i], nums[j])));
+                    while(i<j && nums[i] == nums[++i]);
+                    while(i<j && nums[j] == nums[--j]);
+                }
+
+            }
+        }
+        return res;
+    }
+}
+'''
