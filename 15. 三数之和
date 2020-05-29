@@ -1,7 +1,7 @@
 ##数组先排序 再利用双指针
 *最要注意的点是当 k > 0且nums[k] == nums[k - 1]时即跳过此元素nums[k]：因为已经将 nums[k - 1] 的所有组合加入到结果中，本次双指针搜索只会得到重复组合。
 
-'''
+```
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -35,4 +35,4 @@ class Solution {
         return res;
     }
 }
-'''
+```
